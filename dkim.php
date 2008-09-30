@@ -1,4 +1,24 @@
 <?
+/***************************************************************************\
+*  PHP-DKIM ($Id$)
+*  
+*  Copyright (c) 2008 
+*  Eric Vyncke
+*          
+* This program is a free software distributed under GNU/GPL licence.
+* See also the file GPL.html
+*
+* THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR 
+* IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+* OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+* IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+* NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+* DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+* THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+*THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ ***************************************************************************/
 
 require_once 'dkim-cfg.php' ;
 
@@ -60,7 +80,6 @@ function NiceDump($what,$body) {
 }
 
 function SimpleHeaderCanonicalization($s) {
-//	NiceDump('SimpleHeader',$s) ;
 	return $s ;
 }
 
@@ -78,7 +97,6 @@ function RelaxedHeaderCanonicalization($s) {
 	// Implode it again
 	$s=implode("\r\n",$lines) ;
 	// Done :-)
-//	NiceDump('RelaxedHeader',$s) ;
 	return $s ;
 }
 
@@ -130,8 +148,7 @@ function AddDKIM($headers_line,$subject,$body) {
 		"\tbh=$DKIM_bh;\r\n".
 		"\tb=";
 	$to_be_signed=RelaxedHeaderCanonicalization("$from_header\r\n$to_header\r\n$subject_header\r\n$dkim") ;
-//	NiceDump('header',$to_be_signed) ;
 	$b=DKIMBlackMagic($to_be_signed) ;
-	return "X-DKIM: PHP/DKIM eric@vyncke.org\r\n".$dkim.$b."\r\n" ;
+	return "X-DKIM: php-dkim.sourceforge.net\r\n".$dkim.$b."\r\n" ;
 }
 ?>
