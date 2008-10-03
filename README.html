@@ -53,6 +53,19 @@ $result=mail($to,$subject,$body,$headers,"-f $sender") ;
 </pre>
 The core function is <b>AddDKIM</b> which generates the <b>DKIM-Signature:</b>
 heading (which must preceede the other headers)).
+<h2>Caveats</h2>
+Some Message Transfer Agent (MTA) like sendmail, postfix, qmail, ... are sometimes
+changing the headers with operations such as:
+<ul>
+<li>adding a \r in front of each \n (then it is useless to separate the mail() headings
+with a \r\n as the MTA will translate them into \r\r\n and some DKIM canonicalization
+will choke with the additional \r
+<li>remove the " which are often used as braces around a full name in the To:
+or From: heading
+</ul>
+Therefore, it is advised to use <b>dkim-test.php</b> to send test DKIM emails
+to the various on-line email reflectors to test how your MTA behaves and
+then adjust how you specify the headers.
 <hr>
 <em>Last update September 2008, Eric Vyncke <a href=mailto:eric@vyncke.org>eric at vyncke dot org</a>.</em>
 </body>
