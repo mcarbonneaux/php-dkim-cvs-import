@@ -21,7 +21,7 @@
  ***************************************************************************/
 // DKIM example and test
 
-// Basic configuration of the test programes
+// Basic configuration of the test program
 
 $to='dkim-test@testing.dkim.org, check-auth@verifier.port25.com, test@dkimtest.jason.long.name' ;
 $sender='john@example.com' ;
@@ -43,8 +43,12 @@ $headers="From: \"Fresh DKIM Manager\" <$sender>\r\n".
 $headers = AddDKIM($headers,$subject,$body) . $headers;
 
 // Some Unix MTA has a bug and add redundant \r breaking some DKIM implementation
-// Based on your configuration, you may want to comment the next line
+// Based on your configuration, you may want to comment out the next line
 $headers=str_replace("\r\n","\n",$headers) ; 
+
+// Some Unix MTA has a bug and remove " in the To: From: headings, also breaking some DKIM implementation
+// Based on your configuration, you may want to uncomment out the next line
+$headers=str_replace("\"","",$headers) ; 
 
 $result=mail($to,$subject,$body,$headers,"-f $sender") ;
 if (!$result)
