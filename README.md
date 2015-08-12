@@ -19,6 +19,7 @@ very secure but it makes the DNS step easier):<pre>
 openssl genrsa -out key.priv 384
 </pre>
 <li>Generate the RSA public key from the new RSA private key:<pre>
+openssl rsa -in key.priv -pubout > key.pub
 </pre>
 <li>Copy and paste the private & public keys into <b>dkim-cfg.php</p> in PHP variables $open_SSL_priv and
 $open_SSL_pub (<i>note: this means that your private key is readable to anybody able to read <b>dkim-cfg.php</b>)
